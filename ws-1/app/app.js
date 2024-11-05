@@ -1,7 +1,7 @@
-const socket = new webSocket('ws//localhost:5500');
+const socket = new WebSocket('http://localhost:3000');
 
 function sendMessage(event){
-    event.preventDefault();
+    // event.preventDefault();
     const message = document.querySelector('input[type=text]');
     if(message.value){
         socket.send(message.value)
