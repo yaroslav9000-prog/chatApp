@@ -14,12 +14,8 @@ wss.on('connection', (ws)=>{
     //Event handler for incoming messages from clients
     ws.on('message', (message)=> {
         console.log(`Received a message: ${message}`);
-
-        wss.clients.forEach((client)=>{
-            if(client !== ws && client.readyState == WebSocket.OPEN){
-                client.send(message);
-            }
-        })
+        ws.send(`I received your message: ${message}`);
+        
     })
     ws.on('close', ()=>{
         console.log('A client disconected');
