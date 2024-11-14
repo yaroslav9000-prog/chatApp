@@ -1,11 +1,15 @@
-const socket = io('http://localhost:8080');
+const socket = io('ws://localhost:8080');
 
 function sendMessage(event){
     event.preventDefault();
-    const message = document.querySelector('input[type=text]');
-    if(message.value){
-        socket.emit(message.value)
-        
+    const input = document.querySelector('input[type=text]');
+    if(input.value){
+        socket.emit(input.value);
+        const message = input.value;
+        const myList = document.querySelector('ul');
+        const newMessage = document.createElement('li');
+        newMessage.textContent = message;
+        myList.appendChild(newMessage);
         message.value = '';
     }
     message.focus;
