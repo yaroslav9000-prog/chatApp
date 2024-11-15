@@ -15,11 +15,11 @@ const expressServer = app.listen(PORT, ()=>{
     console.log('listening on port ', PORT);
 })
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname,'public')));
 
 const io = new Server(expressServer, {
     cors: {
-        origin: process.env.NODE_ENV === "production" ? false: ["http://localhost:3500", "http://127.0.0.1:5500"]
+        origin: process.env.NODE_ENV === "production" ? false: ["http://localhost:5500", "http://127.0.0.1:5500"]
     }
 });
 
