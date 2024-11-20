@@ -1,26 +1,27 @@
-const ws = new WebSocket('http://localhost:3500');
+const ws = new WebSocket('ws://localhost:80');
+
 
 const nameInput = document.querySelector('.nameInput');
 const roomInput = document.querySelector('.roomInput');
 const messageList = document.querySelector('.messageList');
-const messageInput = document.querySelector('.messageInput')
-const sendMessageButton = document.querySelector('.sendMessage');
+const messageInputForm = document.getElementById('messageForm');
+const messageInput = document.getElementById('messageInput');
+const sendMessageButton = document.getElementById('sendMessage');
 
 
 const sendMessage = () =>{
-    const message = messageInput.textContent;
+    const message = messageInput.value;
     ws.send(message);
-    console.log('message was sent to a websocket ...', message)
+    messageInput.focus()
 }
-sendMessageButton.addEventListener('click', ()=>{
+messageInput.addEventListener('keypress', (event)=>{
+    event.preventDefault();
+    console.log(messageInput.value);
+})
+sendMessageButton.addEventListener('click', (event)=>{
+    event.preventDefault()
     sendMessage();
-})
+});
 
-ws.onerror((error)=>{
-    console.log(error);
-})
 
-ws.on('message', ()=>{
-
-})
 

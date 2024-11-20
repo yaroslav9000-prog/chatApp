@@ -9,7 +9,6 @@
     <link href=
 "https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
           rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.0/socket.io.min.js" integrity="sha384-OoIbkvzsFFQAG88r+IqMAjyOtYDPGO0cqK5HF5Uosdy/zUEGySeAzytENMDynREd" crossorigin="anonymous" defer></script>
     <script src="./script.js" defer></script>
 </head>
 <body>
@@ -25,9 +24,9 @@
                         
                 </ul>
             </div>
-            <form class="flex justify-center w-full h-1/5">
-                <input class="messageInput m-2 rounded-md h-8 w-2/5" type="text" placeholder="your message">
-                <button class="sendMessage m-2 rounded-md shadow-md w-16 bg-orange-500 hover:bg-orange-700 active:bg-orange-800 h-8" type="submit">send</button>
+            <form id="messageForm" class="flex justify-center w-full h-1/5">
+                <input id="messageInput" class="m-2 rounded-md h-8 w-2/5" type="text" placeholder="your message">
+                <button id="sendMessage" class="m-2 rounded-md shadow-md w-16 bg-orange-500 hover:bg-orange-700 active:bg-orange-800 h-8">send</button>
             </form>
         </div>
     </main>
