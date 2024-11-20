@@ -11,17 +11,26 @@ const sendMessageButton = document.getElementById('sendMessage');
 
 const sendMessage = () =>{
     const message = messageInput.value;
+    appendMessage(message);
     ws.send(message);
     messageInput.focus()
 }
-messageInput.addEventListener('keypress', (event)=>{
-    event.preventDefault();
-    console.log(messageInput.value);
-})
+const appendMessage=(data)=>{
+    const newMessage = document.createElement('li');
+    newMessage.textContent = data;
+    messageList.appendChild(newMessage);
+}
+// messageInput.addEventListener('keypress', (event)=>{
+//     event.preventDefault();
+//     console.log(messageInput.value);
+// })
 sendMessageButton.addEventListener('click', (event)=>{
     event.preventDefault()
     sendMessage();
 });
 
-
-
+ws.addEventListener('message', ({data})=>{
+    appendMessage(toString(data));
+    console.log(data);
+})
+ws.onopen()
