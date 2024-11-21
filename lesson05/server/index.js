@@ -4,6 +4,7 @@ import path from "path";
 import {v4 as uuidv4} from "uuid";
 import { fileURLToPath } from "url";
 import OpenAI from "openai/index.mjs";
+import axios from "axios";
 // const openai = new OpenAI();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -39,45 +40,56 @@ wsServer.on('connection', socket=>{
     socket.on('close', ()=>{
         console.log('Client has disconnected');
     })
-    socket.on('message', (data)=>{
+    socket.on('message', async(data)=>{
         console.log(data.toString());
-        fetch(`https://data.gov.il/api/3/action/datastore_search?resource_id=053cea08-09bc-40ec-8f7a-156f0677aff3&q=${data.toString()}`)
-        .then(response=> response.body)
-        .then((rb) => {
-            const reader = rb.getReader();
         
-            return new ReadableStream({
-              start(controller) {
-                // The following function handles each data chunk
-                function push() {
-                  // "done" is a Boolean and value a "Uint8Array"
-                  reader.read().then(({ done, value }) => {
-                    // If there is no more data to read
-                    if (done) {
-                      console.log("done", done);
-                      controller.close();
-                      return;
-                    }
-                    // Get the data and send it to the browser via the controller
-                    controller.enqueue(value);
-                    // Check chunks by logging to the console
-                    console.log(done, value);
-                    push();
-                  });
-                }
+          // const response = await axios.get(`https://data.gov.il/api/3/action/datastore_search?resource_id=053cea08-09bc-40ec-8f7a-156f0677aff3&q=${data.toString()}`)
+          // const theBody = await response.body;
+          // console.log(response.data.result.records);
+          // socket.send(theBody);
+        // fetch(`https://data.gov.il/api/3/action/datastore_search?resource_id=053cea08-09bc-40ec-8f7a-156f0677aff3&q=${data.toString()}`)
+        // .then(response=> response.body)
+        // .then((rb) => {
+        //     const reader = rb.getReader();
         
-                push();
-              },
-            });
-          })
-          .then((stream) =>
-            // Respond with our stream
-            new Response(stream, { headers: { "Content-Type": "text/html" } }).text(),
-          )
-          .then((result) => {
-            // Do things with result
-            socket.send(result.result);
-          });
+        //     return new ReadableStream({
+        //       start(controller) {
+        //         // The following function handles each data chunk
+        //         function push() {
+        //           // "done" is a Boolean and value a "Uint8Array"
+        //           reader.read().then(({ done, value }) => {
+        //             // If there is no more data to read
+        //             if (done) {
+        //               console.log("done", done);
+        //               controller.close();
+        //               return;
+        //             }
+        //             // Get the data and send it to the browser via the controller
+        //             controller.enqueue(value);
+        //             // Check chunks by logging to the console
+        //             console.log(done, value);
+        //             push();
+        //           });
+        //         }
+        
+        //         push();
+        //       },
+        //     });
+        //   })
+        //   .then((stream) =>
+        //     // Respond with our stream
+        //     new Response(stream, { headers: { "Content-Type": "text/html" } }),
+        //   )
+        //   .then((result) => {
+        //     // Do things with result
+        //     socket.send(result);
+        //   });
+          // const response = await fetch(`https://data.gov.il/api/3/action/datastore_search?resource_id=053cea08-09bc-40ec-8f7a-156f0677aff3&q=${data.toString()}`);
+          // for await(const chunk of response.body){
+          //   console.log(chunk);
+          //   const converted = new TextDecoder().decode(chunk);
+          //   socket.send(converted);
+          // }
     })
     // socket.on('message', data=>{
     //     wsServer.clients.forEach(client=>{

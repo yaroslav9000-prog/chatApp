@@ -29,8 +29,8 @@ sendMessageButton.addEventListener('click', (event)=>{
     sendMessage();
 });
 
-ws.addEventListener('message', ({data})=>{
+ws.addEventListener('message', async({data})=>{
     appendMessage(toString(data));
-    console.log(data);
+    
 })
-ws.onopen()
+// ws.onopen()
